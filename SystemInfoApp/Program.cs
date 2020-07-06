@@ -27,22 +27,13 @@ namespace SystemInfoApp
                         {
                             endpoints.MapGet("/", async context =>
                             {
-                                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-
-                                var appName = PlatformServices.Default.Application.ApplicationName;
-                                var appVersion = PlatformServices.Default.Application.ApplicationVersion;
-
-                                var assemblyVersion = Assembly.GetEntryAssembly()
-                                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                                    .InformationalVersion;
-
                                 var builder = new StringBuilder();
                                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                                    builder.AppendLine("OS Architecture= Windows");
+                                    builder.AppendLine("OS Architecture = Windows");
                                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                                    builder.AppendLine("OS Architecture= Linux");
+                                    builder.AppendLine("OS Architecture = Linux");
                                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                                    builder.AppendLine("OS Architecture= OSX");
+                                    builder.AppendLine("OS Architecture = OSX");
                                 else
                                     builder.AppendLine("OS Architecture = Others");
 
@@ -59,9 +50,14 @@ namespace SystemInfoApp
                                 else
                                     builder.AppendLine("ProcessArchitecture = Others");
 
-                                builder.AppendLine($"BasePath = {basePath}");
-                                builder.AppendLine($"AppName = {appName}");
-                                builder.AppendLine($"AppVersion = {appVersion}");
+                                builder.AppendLine($"BasePath = {PlatformServices.Default.Application.ApplicationBasePath}");
+                                builder.AppendLine($"AppName = {PlatformServices.Default.Application.ApplicationName}");
+                                builder.AppendLine($"AppVersion = {PlatformServices.Default.Application.ApplicationVersion}");
+
+                                var assemblyVersion = Assembly.GetEntryAssembly()
+                                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                                    .InformationalVersion;
+
                                 builder.AppendLine($"AssemplyVersion = {assemblyVersion}");
                                 builder.AppendLine($"RuntimeFramework = {PlatformServices.Default.Application.RuntimeFramework}");
                                 builder.AppendLine($"FrameworkDescription = {RuntimeInformation.FrameworkDescription}");
